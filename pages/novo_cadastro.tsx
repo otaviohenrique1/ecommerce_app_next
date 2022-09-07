@@ -4,6 +4,8 @@ import React from 'react';
 import * as yup from "yup";
 import { FormikHelpers, useFormik } from "formik";
 import SellIcon from '@mui/icons-material/Sell';
+import { estadosDoBrasil } from '../utils/listas';
+import { useRouter } from 'next/router';
 
 const validationSchema = yup.object({
   nome: yup
@@ -87,8 +89,11 @@ const initialValues: DataTypes = {
 };
 
 export default function NovoCadastro() {
+  const router = useRouter();
+  
   const onSubmitForm = (values: DataTypes, formikHelpers: FormikHelpers<DataTypes>) => {
     alert("Salvo");
+    router.replace("/");
   };
 
   const formik = useFormik({
@@ -101,20 +106,33 @@ export default function NovoCadastro() {
     <Box
       display="flex"
       alignItems="center"
-      justifyContent="center"
       flexDirection="column"
       width="100%"
       height="100%"
+      sx={{ paddingX: "40px" }}
     >
       <Box
         marginBottom="30px"
+        marginTop="30px"
         display="flex"
         flexDirection="column"
         alignItems="center"
       >
-        <h1>E-commerce App Next</h1>
-        <SellIcon sx={{ width: "60px", height: "60px", }} />
-        <h2>Login</h2>
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+        >
+          <SellIcon
+            sx={{
+              width: "50px",
+              height: "50px",
+              marginRight: "10px",
+            }}
+          />
+          <h1>E-commerce App Next</h1>
+        </Box>
+        <h2>Novo cadastro</h2>
       </Box>
       <form onSubmit={formik.handleSubmit}>
         <TextField
@@ -217,7 +235,7 @@ export default function NovoCadastro() {
           fullWidth
           id="complemento"
           name="complemento"
-          label="complemento"
+          label="Complemento"
           type="text"
           value={formik.values.complemento}
           onChange={formik.handleChange}
@@ -229,7 +247,7 @@ export default function NovoCadastro() {
           fullWidth
           id="bairro"
           name="bairro"
-          label="bairro"
+          label="Bairro"
           type="text"
           value={formik.values.bairro}
           onChange={formik.handleChange}
@@ -273,9 +291,12 @@ export default function NovoCadastro() {
             onChange={formik.handleChange}
             error={formik.touched.estado && Boolean(formik.errors.estado)}
           >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {estadosDoBrasil.map((item, index) => (
+              <MenuItem
+                value={item.sigla}
+                key={index}
+              >{item.nome}</MenuItem>
+            ))}
           </Select>
           <FormHelperText
             sx={{ color: "#d32f2f" }}
@@ -293,14 +314,24 @@ export default function NovoCadastro() {
             variant="contained"
             fullWidth
             type="submit"
+            sx={{ height: "50px" }}
           >Entrar</Button>
           <Button
             color="error"
             variant="contained"
             fullWidth
             type="button"
+            sx={{ height: "50px" }}
             onClick={() => formik.resetForm()}
           >Limpar</Button>
+          <Button
+            color="info"
+            variant="contained"
+            fullWidth
+            type="button"
+            sx={{ height: "50px" }}
+            onClick={() => router.replace("/")}
+          >Voltar</Button>
         </ButtonGroup>
       </form>
     </Box>

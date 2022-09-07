@@ -4,6 +4,7 @@ import React from 'react';
 import * as yup from "yup";
 import { FormikHelpers, useFormik } from "formik";
 import SellIcon from '@mui/icons-material/Sell';
+import { useRouter } from 'next/router';
 
 const validationSchema = yup.object({
   email: yup
@@ -27,6 +28,8 @@ const initialValues: DataTypes = {
 };
 
 export default function Login() {
+  const router = useRouter();
+
   const onSubmitForm = (values: DataTypes, formikHelpers: FormikHelpers<DataTypes>) => {
     alert("Salvo");
   };
@@ -45,15 +48,27 @@ export default function Login() {
       flexDirection="column"
       width="100%"
       height="100%"
+    ><Box
+      marginBottom="30px"
+      marginTop="30px"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
     >
-      <Box
-        marginBottom="30px"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
-        <h1>E-commerce App Next</h1>
-        <SellIcon sx={{ width: "60px", height: "60px", }} />
+        <Box
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+        >
+          <SellIcon
+            sx={{
+              width: "50px",
+              height: "50px",
+              marginRight: "10px",
+            }}
+          />
+          <h1>E-commerce App Next</h1>
+        </Box>
         <h2>Login</h2>
       </Box>
       <form onSubmit={formik.handleSubmit}>
@@ -84,7 +99,8 @@ export default function Login() {
           variant="contained"
           fullWidth
           type="button"
-          sx={{ marginBottom: "10px" }}
+          sx={{ marginBottom: "10px", height: "50px" }}
+          onClick={() => router.replace("/novo_cadastro")}
         >Novo cadastro</Button>
         <ButtonGroup fullWidth>
           <Button
@@ -92,12 +108,14 @@ export default function Login() {
             variant="contained"
             fullWidth
             type="submit"
-          >Entrar</Button>
+            sx={{ height: "50px" }}
+            >Entrar</Button>
           <Button
             color="error"
             variant="contained"
             fullWidth
             type="button"
+            sx={{ height: "50px" }}
             onClick={() => formik.resetForm()}
           >Limpar</Button>
         </ButtonGroup>
