@@ -1,9 +1,9 @@
-import { Button, ButtonGroup, Container, TextField } from '@mui/material'
-import { Box } from '@mui/system';
 import React from 'react';
 import * as yup from "yup";
 import { FormikHelpers, useFormik } from "formik";
 import SellIcon from '@mui/icons-material/Sell';
+import { Button, ButtonGroup, TextField } from '@mui/material'
+import { Box } from '@mui/system';
 import { useRouter } from 'next/router';
 
 const validationSchema = yup.object({
@@ -31,7 +31,7 @@ export default function Login() {
   const router = useRouter();
 
   const onSubmitForm = (values: DataTypes, formikHelpers: FormikHelpers<DataTypes>) => {
-    alert("Salvo");
+    router.replace("/homepage");
   };
 
   const formik = useFormik({
